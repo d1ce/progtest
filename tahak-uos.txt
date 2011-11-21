@@ -1,0 +1,374 @@
+tail
+	tail -2
+		posledni 2. radku
+	tail +2
+		vsechny od 2. radku
+head
+	head -2
+		prvni 2 radky
+	head -n -2
+		oriznuti poslednich 2 radku
+	parametr -n nefunguje na SunOS
+presmerovani vstupu
+	rm dasdasd > sx 2>&1
+		presmeruje err na stdout a pak vse zapise na sx
+		(nic se nezobrazi v konzoli)
+sort
+	sort -t: -k 4,4nr -k 5,5 -u
+		oddelovac=: seradit dle 4. sloupce numericky a relurzivne,
+		dle 5. sloupce normalne, unikatne
+grep
+	-v = vrati radky, ktere neodpovidaji RE
+	-o = vrati vyraz (neni implementovano)
+	-c = vrati pocet radku
+	-i = case intensive
+	-l = pouze nazvy souboru
+	grep '\[error\]' s
+		funkcni escapovani []
+	grep 'href="[^"]\{1,\}"'
+		funkcni kvantifikatory
+	ypcat passwd | /usr/xpg4/bin/grep -f $file
+		hleda dle vyrazu v souboru
+	egrep '(Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day' words
+		nefunguje v grep
+uniq
+	-c = pocet duplicit , nutno pouzit sort
+	-r rekurzivne
+	-n numericky
+tr
+	tr -s '<znak>'
+		vymazani opakujiciho se znaku
+ls
+	-l
+	-a skryte soubory
+	-d jen obsah slozky
+	-R rekurzivne
+	-i inode
+	-t sort by modification time
+	-s size , with -l, print size of each file, in block
+	-r reverse current sort
+paste
+	paste -d ":|" pass.{name,user,uid}
+		: = vlozi se mezi name,user 
+		| = ---//--- user uid
+ln
+	ln -s file symlink_name
+find
+	find / -name game
+	find /usr -name *stat
+	find /tmp -name core -type f
+	-type [d,f,l,b,c]typu souboru
+	-inum nčísla i-uzlu
+	-name ΄vzor΄ jména (lze použít znaky *,?,[ ] ,...)
+	-perm nnn přístupových práv
+	-mtime [n | -n | +n] času modifikace
+	-atime [n | -n | +n] času přístupu
+	-ctime [n | -n | +n] času modifikace
+	-ok příkaz {} \; provede interaktivně příkaz pro nalezené soubory
+	-exec příkaz {} \; provede neinteraktivně příkaz pro nalezené soubory
+	Nalezení všech souborů v adresáři /home/courses/BIUOS 
+		dir=/home/courses/BIUOS
+		find $dir 
+		Budou to skutečně všechny soubory? 
+	Nalezení všech obyčejných souborů 
+		find $dir -type f 
+	větších než 1000 bloků 
+		find $dir -type f -size +1000 
+	menších než 100 bajtů (znaků) 
+		find $dir -type f -size -100c
+	Nalezení všech obyčejných souborů mladších než týden 
+		find $dir -type f -mtime -7 
+	starších než 10 dní 
+		find $dir -type f -mtime +10 
+	s i-nodem číslo 314338 
+		find $dir -type f -inum 314338 
+	s alespoň 1 dalším hardlinkem 
+		find $dir -type f -links +1 
+	Nalezení všech souborů s nastaveným set-gid bitem 
+		find $dir -perm -g+s
+	Vypsání detailů nalezených souborů 
+		find /usr/bin -name '*grep' -ls 
+	Spuštění externího příkazu 
+		find /etc -type f -exec grep -l 'Solaris 10' {} \; 
+		find /etc -type f -exec grep -l 'Solaris 10' {} + 
+	Spuštění externího příkazu s dotazem 
+		find ~ -type f -size 0 -ok rm {} \;
+	$ find $HOME
+	$ find $HOME –type f
+	$ find /bin –type f –name at
+	$ find /bin –type f –name at
+	$ find /usr/bin -type f -name ΄*grep΄
+	$ find . -atime -1
+	$ find . -name ΄[A-Z]*΄
+	$ find . \! -name ΄[A-Z]*΄
+	$ find . –name core –ok rm { } \;
+	$ find . –name core –exec rm { } \;
+split
+	split -b 1k screenshot.jpg
+	split -l 100 man.file
+	split -l 100 man.file
+	man bash | cat -n | split -l 10 -a 3 - man.file
+	man bash | split -l 500 - segment
+		nacte ze stdin
+	-l lines
+	-b bytes
+	-a delka pripony
+diff
+	diff /etc/init.d/nscd /etc/init.d/ldap.client
+patch
+	patch nscd < nscd.patch
+cmp
+	Porovnání dvou binárních souborů
+	cmp $f1 $f2
+	cmp -l $f1 $f2
+comm
+	Zjištění společných a rozdílných řádků
+	cd /home/courses/BIUOS/public
+	comm biuos-c05-c1 biuos-c05-c2
+	comm -23 biuos-c05-c1 biuos-c05-c2
+	comm -12 biuos-c05-c1 biuos-c05-c2 | comm -12 - biuos-c05-c3
+	Porovná řádky dvou setříděných souborů a vypíše tři sloupce:
+	1. sloupec obsahuje řádky obsažené pouze v souboru1
+	2. sloupec obsahuje řádky obsažené pouze v souboru2
+	3. sloupec obsahuje řádky obsažené v obou souborech
+date
+	date "+%Y-%m-%d %H:%I:%S"
+who
+	bremondr   pts/16       Nov 10 20:24    (unassigned-147.32.31.0-193.sh.cvut.cz)
+w
+	10:37pm  up 19 day(s),  6:47,  18 users,  load average: 0.28, 0.25, 0.21
+	User     tty           login@  idle   JCPU   PCPU  what
+	bremondr pts/16        8:24pm  2:13                -bash
+id
+	uid=13453(nesvejak) gid=1001(student)
+ssh
+	ssh username@hostname
+man
+	man -s 3c printf
+	man -k printf
+scp
+	Přenos souborů na vzdálený počítač
+		scp soubor.txt username@hostname:jmeno_souboru_v_home_na_serveru.txt 
+		scp soubor.txt novakj1@fray1.fit.cvut.cz:/home/student/novakj1/jmeno_souboru_na_serveru.txt 
+	Přenos souborů ze vzdáleného počítače
+		scp username@hostname:jmeno_souboru_v_home_na_serveru.txt soubor_na_lokalnim_disku.txt 
+	Zachování jména souboru, přenos do aktuálního adresáře na lokálním počítači: 
+		scp username@hostname:jmeno_souboru.txt .
+export
+	export LC_TIME=cs_CZ
+PAGER=less
+set
+	vypis promennych
+~/.bashrc
+HISTFILE, HISTSIZE, HISTFILESIZE
+history
+du
+	-s … vypíše pouze celkovou sumu 
+	-k … místo bloků udává velikost v kiB 
+	-h … udává velikosti v násobných jednotkách KiB, MiB, GiB, … 
+	-L … zpracovává cíle symbolických linků
+	-a vypise i soubory
+	du
+		70      ./NetBeansProjects/CppApplication_2
+		194     ./NetBeansProjects
+df
+	/                  (rpool/ROOT/s10s_u9wos_14a):37452990 blocks 37452990 files
+	/devices           (/devices          ):       0 blocks        0 files
+file
+	typ souboru
+strings
+	strings uncle_tim.tiff
+		vypise stringy z binarky
+od
+	vypise hex souboru
+sed
+	nahrazuje retezce pomoci regularu
+	sed 's/:/@fit.cvut.cz /'
+	sed -n '2,3p'
+		vypise 2. az 3. radek
+	d(delete) zruší řádku
+	p(print) vypíše řádku na výstup
+	s/RE1/RE2/volby nahradí text, který odpovídá vzoru RE1, řetězcem RE2
+	q/RE1/ ukončí výstup, narazí-li na shodu s RE1
+	sed -n '/^J/p' data.txt
+		vytiskne radky zacinajici na J
+	sed '/^J/d' data.txt
+		smaze radky zacinajici na J
+	sed -n '/38$/,/27$/p' data.txt
+		vytiskne radky, ktere jsou mezi radky koncici 38$ a 27$, vcetne techto radku
+	sed 's/Praha/Louny/' data.txt
+		nahrazemi Praha -> Louny
+	sed 's/[0-9][0-9]$/& let/' data.txt
+		& = odkaz na [0-9][0-9] , tzn. se k puvodnimu search pripoji " let"
+awk
+	awk 'BEGIN {print "Soubory a prava\n"}
+		prida na zacatek vystupu "soubory a prava"
+	awk 'NR<=10'
+	awk 'NR==1,NR==10'
+		Výpis prvních 10 řádků (head)
+	Výpis posledních 10 řádků (tail) - opakování zpracování řádky shellem 
+		awk NR\>=$((`wc -l </etc/passwd`-10)) /etc/passwd 
+	Výpis řádků obsahujících RE (grep) 
+		awk /root/ /etc/group 
+	Výpis řádků neobsahujících RE (grep -v) 
+		awk '!/root/' /etc/group
+	Výběr položek z ypcat passwd podle jmen
+		ypcat passwd \
+		| awk '/Adela/ /Barbora/ /Celeste/ /Dana/ /Eliska/'
+		ypcat passwd \
+		| awk -f /home/courses/BIUOS/public/biuos-c07-names.awk
+		ypcat passwd \
+		| /home/courses/BIUOS/public/biuos-c07-names.awk
+	Z výstupu ypcat passwd výběr položek s UID 1000-9999 
+		ypcat passwd | awk -F: '$3>=1000 && $3<=9999'
+	Zjištění počtu uživatelů z výstupu ypcat passwd 
+		ypcat passwd \
+		| awk 'END { print "Total users: " NR }'
+	Výběr a změna pořadí jednotlivých položek /etc/passwd 
+		awk 'BEGIN { FS=":"; OFS=":" } 
+			{ print $3,$1,$5 }' /etc/passwd
+chmod
+	chmod u+x,g-r,o+w a.txt
+	chmod ug-w soubor
+	chmod u=rwx, g=rx, o=r soubor
+chown
+	chown jméno_nového_vlastníka soubor(y)
+	chown [-R] vlastník [:skupina] seznam_souborů
+chgrp
+	chgrp [-R] skupina seznam_souborů
+umask
+	Přístupová práva vzniknou množinovým rozdílem výchozí hodnoty a masky.
+	maska
+	soubor
+	adresář
+	poznámka
+	000
+	666
+	777
+	odpovídá výchozí hodnotě, nebezpečné
+	022
+	644
+	755
+	obvyklé nastavení
+	027
+	640
+	750
+	vyšší bezpečnost
+	077
+	600
+	700
+	největší restrikce
+	066
+	600
+	711
+	kompromisní řešení
+tar
+	create 
+		touch s1 s2 s3 ; ls s? > tar.list 
+		tar cvf archive.tar s? 
+		tar cvf archive.tar -I tar.list 
+	extract
+		tar xvf ../archive.tar
+gzip
+	Komprese 
+		gzip s1 
+		gzip < s2 > s2.gz 
+	Dekomprese 
+		gzip -d s1.gz 
+		gunzip s1.gz 
+		gunzip < s2.gz > s2.new
+ps
+	Výpis podrobností o procesech uživatele 
+		passwd $USER & 
+		ps -f -u $USER		(effective)
+		ps -f -U $USER		(real)
+		ps -ef | grep "^ *$USER "
+	ps aux
+	ps
+	vypíše krátkou informaci o procesech odstartovaných z daného terminálu.
+		ps –e
+	vypíše krátkou informaci o všech procesech v systému.
+		ps –f nebo ps –l
+	vypíše detailnější informaci o procesech:
+		–S stavy procesu (O, S, R, Z, T)
+		–PID, PPID číslo procesu a číslo rodičovského procesu
+		–PRI priorita (v Solarisu při –c mění význam a přibývá položka CLS)
+		–NI NICE hodnota
+		–STIME čas spuštění procesu
+		–TIME čas spotřebovaný procesem na procesoru
+		–TTY terminál přidělený procesu
+		–CMD příkaz, který spustil proces
+vmstat
+	vmstat n k
+		Vypíše informace o systému (po nvteřinách k-krát)
+	vmstat –s
+		Vypíše přehled událostí v sysyému od bootování
+		
+		
+		
+kill
+	kill [ -s signal | -p ] [ -a ] [ -- ] pid ...
+	kill -l [ signal ]
+	 1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL
+	 5) SIGTRAP      6) SIGABRT      7) SIGEMT       8) SIGFPE
+	 9) SIGKILL     10) SIGBUS      11) SIGSEGV     12) SIGSYS
+	13) SIGPIPE     14) SIGALRM     15) SIGTERM     16) SIGUSR1
+	17) SIGUSR2     18) SIGCHLD     19) SIGPWR      20) SIGWINCH
+	21) SIGURG      22) SIGIO       23) SIGSTOP     24) SIGTSTP
+	25) SIGCONT     26) SIGTTIN     27) SIGTTOU     28) SIGVTALRM
+	29) SIGPROF     30) SIGXCPU     31) SIGXFSZ     32) SIGWAITING
+	33) SIGLWP      34) SIGFREEZE   35) SIGTHAW     36) SIGCANCEL
+	37) SIGLOST     41) SIGRTMIN    42) SIGRTMIN+1  43) SIGRTMIN+2
+	44) SIGRTMIN+3  45) SIGRTMAX-3  46) SIGRTMAX-2  47) SIGRTMAX-1
+	48) SIGRTMAX
+	15 SIGTERM (TERMinate)
+		Posílán příkazem kill PID.
+		Standardní reakce je ukončení procesu. Obvyklý způsob předčasného ukončení procesu.
+	9 SIGKILL (KILL)
+		Standardní reakce (kterou nelze změnit ani ignorovat) je ukončení procesu.
+	2 SIGINT (INTerrupt)
+	3 SIGQUIT (QUIT)
+		Posílány procesům prostřednictvím terminálového ovladače při stisku nadefinovaných znaků.
+		Standardní reakce je ukončení (2) a ukončení s vytvořením souboru core (3).
+	1 SIGHUP (HangUP)
+		Posílán procesu, když končí jeho rodič (shellu, když zavěsil modem).
+		Standardní reakce je ukončení. Končí-li proces, je signál poslán všem jeho potomkům. Proto při odhlášení jsou ukončeny všechny procesy spuštěné v rámci tohoto přihlášení.
+		Má-li proces pokračovat po ukončení rodiče, je třeba použít příkaz
+		nohup příkaz &
+cat
+	-n ocislovani
+tee
+	tee [–ai] [soubory]
+	-a připojení k souboru
+	-i ignorování všech přerušení
+wc
+	-c pouze počet znaků
+	-w pouze počet slov
+	-l pouze počet řádek
+cut
+	-c seznamvypíše znaky na příslušných pozicích
+		definovaných seznamem (např. 2-10,15,45-)
+	-d znakdefinice oddělovače
+	-f seznamvypíše sloupce určené seznamem
+		(oddělovač může být pouze jeden znak)
+
+
+
+zzz
+	echo "$hh" | head -3 | tail -1
+		3. radek z promenne $hh
+	ypcat passwd
+		safarste:##safarste:11260:1001:Stefan Safar student:/home/stud/safarste:/bin/bash
+	log apache
+		127.0.0.1 - - [06/May/2011:10:44:58 +0200] "GET /adm HTTP/1.1" 301 232
+	ls -l
+		-rw-------   1 nesvejak student        4 Sep 29 00:10 a.ps
+	paste -d'*' {/dev/null,file}
+	jobs
+		vypíše seznam úloh(procesů) běžících v tomto shellu
+	jobs-l
+		dtto + PID procesu
+	fg [%JID]
+		přesune úlohu na popředí
+	bg[%JID]
+		přesune úlohu na pozadí
