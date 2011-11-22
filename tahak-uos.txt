@@ -66,6 +66,7 @@ find
 	-ctime [n | -n | +n] času modifikace
 	-ok příkaz {} \; provede interaktivně příkaz pro nalezené soubory
 	-exec příkaz {} \; provede neinteraktivně příkaz pro nalezené soubory
+	-user username hleda dle vlastnika souboru
 	Nalezení všech souborů v adresáři /home/courses/BIUOS 
 		dir=/home/courses/BIUOS
 		find $dir 
@@ -103,6 +104,7 @@ find
 	$ find . \! -name ΄[A-Z]*΄
 	$ find . –name core –ok rm { } \;
 	$ find . –name core –exec rm { } \;
+	find . | xargrs grep re - rekurzivni hledani v obsahu souboru
 split
 	split -b 1k screenshot.jpg
 	split -l 100 man.file
@@ -132,7 +134,7 @@ comm
 	2. sloupec obsahuje řádky obsažené pouze v souboru2
 	3. sloupec obsahuje řádky obsažené v obou souborech
 date
-	date "+%Y-%m-%d %H:%I:%S"
+	date "+%Y-%m-%d %H:%M:%S"
 who
 	bremondr   pts/16       Nov 10 20:24    (unassigned-147.32.31.0-193.sh.cvut.cz)
 w
@@ -372,3 +374,5 @@ zzz
 		přesune úlohu na popředí
 	bg[%JID]
 		přesune úlohu na pozadí
+	/etc/passwd
+		root:x:0:1:Super-User:/root:/sbin/sh
