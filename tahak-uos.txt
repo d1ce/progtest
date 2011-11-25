@@ -229,10 +229,59 @@ awk
 	Výběr a změna pořadí jednotlivých položek /etc/passwd 
 		awk 'BEGIN { FS=":"; OFS=":" } 
 			{ print $3,$1,$5 }' /etc/passwd
+	Výběr a změna pořadí jednotlivých položek /etc/passwd 
+		awk 'BEGIN { FS=":"; OFS=":" } 
+		           { print $3,$1,$5 }' /etc/passwd
+	Nalezení uživatele s nejdelším jménem 
+		ypcat passwd | awk -F: '
+		{ 
+			if (length($5) > max) {
+				max=length($5); user=$1; name=$5
+			}
+		}
+		END {
+			print user ":" name " (" max ")" 
+		}'
+	Formátovaný výpis uživatelů Korn shellu
+		ypcat passwd | awk -F: '
+		BEGIN {
+			print "Uzivatele Korn shellu:"
+			for (d=0; d<=60; d++) printf "-"; printf "\n"
+		}
+		$7 ~ /ksh/ {
+			if (length($1)<=7) tab="\t\t"; else tab="\t"
+			print $1 tab $5
+			ksh++
+		}
+		END {
+			for (d=0; d<=60; d++) printf "-"; printf "\n"
+			print "Celkem " ksh " z " NR " uzivatelu"
+		}'
+	length(str) 
+		délka řetězce str 
+	substr(str, from, len) 
+		vrátí len znaků od pozice from řetězce str 
+	sub(ere,repl[,in]) 
+		nahradí část odpovídající ERE za řetězec repl v textu in (jinak v $0) 
+	gsub(ere,repl[,in]) 
+		nahradí všechny části odpovídající ERE za řetězec repl v textu in (jinak v $0) 
+	split(str,arr[,fs]) 
+		rozdělí řetězec str do položek pole arr podle oddělovače fs (jinak FS)
 chmod
 	chmod u+x,g-r,o+w a.txt
 	chmod ug-w soubor
 	chmod u=rwx, g=rx, o=r soubor
+	Právo
+		Význam u adresářů
+		r
+			číst obsah souboru (cat)
+			vypisovat obsah adresáře (ls)
+		w
+			měnit obsah souborů (vi)
+			vytvářet a rušit soubory v adresáři (rm)
+		x
+			spouštět soubor jako program
+			nastavovat a procházet adresář (cd)
 chown
 	chown jméno_nového_vlastníka soubor(y)
 	chown [-R] vlastník [:skupina] seznam_souborů
@@ -300,14 +349,15 @@ ps
 		–TIME čas spotřebovaný procesem na procesoru
 		–TTY terminál přidělený procesu
 		–CMD příkaz, který spustil proces
+	ps -ef
+		UID   PID  PPID   C    STIME   TTY         TIME CMD
+		root  0    0      0    Oct 22  ?          0:55 sched
 vmstat
 	vmstat n k
 		Vypíše informace o systému (po nvteřinách k-krát)
 	vmstat –s
 		Vypíše přehled událostí v sysyému od bootování
-		
-		
-		
+
 kill
 	kill [ -s signal | -p ] [ -a ] [ -- ] pid ...
 	kill -l [ signal ]
@@ -348,13 +398,54 @@ wc
 	-w pouze počet slov
 	-l pouze počet řádek
 cut
-	-c seznamvypíše znaky na příslušných pozicích
+	-c seznam vypíše znaky na příslušných pozicích
 		definovaných seznamem (např. 2-10,15,45-)
-	-d znakdefinice oddělovače
+	-d znak definice oddělovače
 	-f seznamvypíše sloupce určené seznamem
 		(oddělovač může být pouze jeden znak)
+Návratový kód
+	PASS=/etc/passwd
+	• Úspěch                    grep ^root: "$PASS"
+	                            echo $?
+	• Neúspěch                  grep ^roooot: "$PASS"
+	                            echo $?
+	• Špatné použití            grep ^root: /etc/foo
+	                            echo $?
+	• Špatná přístupová práva   ~/.bash_history
+	                            echo $?
+	• Program nenalezen         winzip
+	                            echo $?
+	• Ukončení signálem         ls -lR /  
+	                            echo $?
+Podmíněné spouštění příkazů
+	 && a || není logické AND a OR, vyzkoušejte! 
+	Podmíněné vykonání po úspěchu předešlého příkazu 
+		tar xvf archiv.tar && rm archiv.tar 
+		tar xvf archiv.tar && rm archiv.tar && echo ”Archiv uspesne rozbalen a smazan” » log 
+	Podmíněné vykonání po neúspěchu předešlého příkazu 
+		[ -d adr ] || mkdir adr 
+	Podmíněné vykonání bloku příkazů + 
+		[ -d /adr ] && { cd /; tar cvf ~/adr.tar adr; }
+Inkrementace hodnoty proměnné 
+	max=`ypcat passwd | cut -d: -f3 | sort -n | tail -1`
+	max=`expr $max + 1`
+	
+	max=$((max+1))
+	((max=max+1))
+	((max++))
+	
+	let max=max+1
+	let max++
+Průměrná velikost obyč. souborů v aktuálním adresáři 
+	ls -l | awk '/^-/ {sum+=$5;c++} END {print sum/c}'
+	ls -l | awk '/^-/ {sum+=$5;c++}
+	             END  {printf("%f\n", sum/c)}'
 
-
+Průměrný počet systémových volání za sekundu 
+	calls=`vmstat -s | grep calls | tr -dc '[0-9]'`
+	uptime=`expr 60 \* $(/home/courses/BIUOS/public/biuos-c11-uptime_min)`
+	echo $((calls/uptime))
+	echo $calls/$uptime | bc -l
 
 zzz
 	echo "$hh" | head -3 | tail -1
