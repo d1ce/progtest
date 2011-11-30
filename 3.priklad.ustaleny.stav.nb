@@ -1,0 +1,158 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      5647,        149]
+NotebookOptionsPosition[      5084,        128]
+NotebookOutlinePosition[      5429,        143]
+CellTagsIndexPosition[      5386,        140]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"R1", "=", "3300"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"R2", "=", "47000"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"amplituda", "=", "5"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"uZ", "=", "amplituda"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"uzel1", "=", 
+    RowBox[{"iU", "\[Equal]", "iR2"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"rez2", "=", 
+   RowBox[{"u3", "\[Equal]", 
+    RowBox[{"iR2", "*", "R2"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"zdroj", "=", 
+    RowBox[{"uZ", "\[Equal]", "u3"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"rovnice", "=", 
+   RowBox[{"{", 
+    RowBox[{"uzel1", ",", "rez2", ",", "zdroj"}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"nezname", "=", 
+   RowBox[{"{", 
+    RowBox[{"iU", ",", "iR2", ",", "u3"}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"vysledek", "=", 
+   RowBox[{"Solve", "[", 
+    RowBox[{"rovnice", ",", "nezname"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"N", "[", 
+   RowBox[{"u3", "/.", "vysledek"}], "]"}], " ", 
+  "\"\<V ( Uout )\>\""}]}], "Input",
+ CellChangeTimes->{{3.531159484607422*^9, 3.531159486248047*^9}, {
+   3.531159554466797*^9, 3.531159986989258*^9}, {3.5311600202441406`*^9, 
+   3.5311601366972656`*^9}, {3.5311601718222656`*^9, 
+   3.5311602739316406`*^9}, {3.5311603474472656`*^9, 
+   3.5311604091503906`*^9}, {3.53150816921875*^9, 3.5315081738125*^9}, {
+   3.531508265390625*^9, 3.5315082816875*^9}, {3.5315083126875*^9, 
+   3.5315083384375*^9}, {3.53150836871875*^9, 3.53150840575*^9}, {
+   3.531508439421875*^9, 3.531508450640625*^9}, {3.5315086651875*^9, 
+   3.531508708109375*^9}, {3.531508991109375*^9, 3.531508998875*^9}, 
+   3.5315091691875*^9, {3.5315092310625*^9, 3.531509362921875*^9}, {
+   3.531543803*^9, 3.5315438158125*^9}, {3.531543857578125*^9, 
+   3.531543866078125*^9}, {3.531544069515625*^9, 3.531544146734375*^9}, {
+   3.53154421309375*^9, 3.531544214203125*^9}, {3.531544502828125*^9, 
+   3.531544582453125*^9}, {3.531548904375*^9, 3.53154890875*^9}, {
+   3.531548968578125*^9, 3.531548977328125*^9}, {3.531550528625*^9, 
+   3.531550538234375*^9}, {3.531550658109375*^9, 3.531550708765625*^9}, {
+   3.531551799765625*^9, 3.531551814875*^9}, 3.531551898765625*^9, {
+   3.53155861775*^9, 3.531558628703125*^9}, {3.531558673515625*^9, 
+   3.531558701921875*^9}, {3.531568545453125*^9, 3.5315685465625*^9}, {
+   3.531568604984375*^9, 3.5315686064375*^9}, {3.53156880534375*^9, 
+   3.531568835078125*^9}, 3.53158541015625*^9, {3.53158550234375*^9, 
+   3.531585503515625*^9}, {3.531657387515625*^9, 3.53165741653125*^9}, {
+   3.53165746078125*^9, 3.53165746759375*^9}, {3.53165751546875*^9, 
+   3.53165753284375*^9}, {3.5316576183125*^9, 3.53165765665625*^9}, {
+   3.53165770253125*^9, 3.53165778878125*^9}, {3.53165783040625*^9, 
+   3.531657880984375*^9}, {3.531657962859375*^9, 3.53165806375*^9}, {
+   3.531658105703125*^9, 3.531658110015625*^9}, {3.531658202125*^9, 
+   3.53165820846875*^9}, {3.53165828771875*^9, 3.53165828990625*^9}, {
+   3.53165852853125*^9, 3.531658529734375*^9}, {3.531658605296875*^9, 
+   3.53165861471875*^9}, {3.531658695765625*^9, 3.531658699484375*^9}, {
+   3.531658911265625*^9, 3.531658916140625*^9}, 3.53165899765625*^9, {
+   3.531659066984375*^9, 3.531659079390625*^9}, {3.531659379078125*^9, 
+   3.53165938921875*^9}, {3.53165942253125*^9, 3.531659488796875*^9}, {
+   3.5316595415625*^9, 3.5316595418125*^9}, {3.531659591578125*^9, 
+   3.5316596451875*^9}, {3.5316596891875*^9, 3.531659689890625*^9}, {
+   3.531659729375*^9, 3.531659730765625*^9}, {3.531659805703125*^9, 
+   3.531659893*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"5.`", " ", "\<\"V ( Uout )\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.531659895828125*^9}]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.531658715203125*^9, 3.53165871521875*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.5316587059375*^9, 3.531658705953125*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.5316587065*^9, 3.531658706515625*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.531658575375*^9, 3.531658575390625*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.531658576140625*^9, 3.531658576140625*^9}}]
+},
+WindowSize->{607, 750},
+WindowMargins->{{Automatic, 69}, {23, Automatic}},
+FrontEndVersion->"8.0 for Microsoft Windows (32-bit) (February 23, 2011)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 3900, 83, 332, "Input"],
+Cell[4470, 107, 134, 3, 30, "Output"]
+}, Open  ]],
+Cell[4619, 113, 91, 1, 31, InheritFromParent],
+Cell[4713, 116, 90, 1, 31, InheritFromParent],
+Cell[4806, 119, 87, 1, 31, InheritFromParent],
+Cell[4896, 122, 89, 1, 31, InheritFromParent],
+Cell[4988, 125, 92, 1, 31, InheritFromParent]
+}
+]
+*)
+
+(* End of internal cache information *)
